@@ -1,28 +1,28 @@
-import dataclasses
-from enum import Enum, auto
+from dataclasses import dataclass, field
+from enum import StrEnum, auto
 
 
-class Jewel(Enum):
+class Jewel(StrEnum):
     Plain = auto()
     Diamond = auto()
     Pearl = auto()
     Amber = auto()
 
 
-class EarringType(Enum):
+class EarringType(StrEnum):
     Stud = auto()
     Hoop = auto()
     Drop = auto()
 
 
-class NecklaceType(Enum):
+class NecklaceType(StrEnum):
     Beads = auto()
     Chain = auto()
     Pendant = auto()
     LongChain = auto()
 
 
-@dataclasses.dataclass
+@dataclass
 class Jewellery:
     stone: Jewel
 
@@ -42,13 +42,13 @@ class Jewellery:
         return False
 
 
-@dataclasses.dataclass
+@dataclass
 class Ring(Jewellery):
     def is_ring(self):
         return True
 
 
-@dataclasses.dataclass
+@dataclass
 class Earring(Jewellery):
     type: EarringType
 
@@ -59,7 +59,7 @@ class Earring(Jewellery):
         return True
 
 
-@dataclasses.dataclass
+@dataclass
 class Necklace(Jewellery):
     type: NecklaceType
 
@@ -70,7 +70,7 @@ class Necklace(Jewellery):
         return self.type is NecklaceType.Beads or self.type is NecklaceType.LongChain
 
 
-@dataclasses.dataclass
+@dataclass
 class PendantNecklace(Jewellery):
     chain: Necklace
     pendant: Jewellery
@@ -88,26 +88,26 @@ class PendantNecklace(Jewellery):
         return True
 
 
-@dataclasses.dataclass
+@dataclass
 class Pendant(Jewellery):
     def is_small(self):
         return True
 
 
+@dataclass
 class JewelleryBox:
-    def __init__(self):
-        self.ring_compartment = []
-        self.top_shelf = []
-        self.main_section = []
+    ring_compartment: list = field(default_factory=list)
+    top_shelf: list = field(default_factory=list)
+    main_section: list = field(default_factory=list)
 
 
+@dataclass
 class JewelleryStorage:
-    def __init__(self):
-        self.box = JewelleryBox()
-        self.tree = []
-        self.travel_roll = []
-        self.safe = []
-        self.dresser_top = []
+    tree: list = field(default_factory=list)
+    travel_roll: list = field(default_factory=list)
+    safe: list = field(default_factory=list)
+    dresser_top: list = field(default_factory=list)
+    box: JewelleryBox = field(default_factory=JewelleryBox)
 
     def is_in_travel_roll(self, item):
         return item in self.travel_roll

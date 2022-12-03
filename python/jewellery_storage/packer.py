@@ -1,4 +1,4 @@
-from jewellery_storage import Jewellery, JewelleryStorage, Jewel, EarringType, NecklaceType, Necklace
+from jewellery_storage.storage import Jewellery, JewelleryStorage, Jewel, EarringType, NecklaceType, Necklace
 
 
 def pack_necklace(item: Necklace, storage: JewelleryStorage):

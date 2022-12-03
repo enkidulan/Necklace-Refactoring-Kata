@@ -1,8 +1,5 @@
-
-from jewellery_storage import *
-from packer import pack_necklace
-# Needed for pytest
-from test_jewellery_storage import jewellery_storage
+from jewellery_storage.storage import *
+from jewellery_storage.packer import pack_necklace
 
 def test_pack_pearl_necklace(jewellery_storage):
     item = Necklace(stone=Jewel.Pearl, type=NecklaceType.Beads)
