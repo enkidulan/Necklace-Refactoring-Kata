@@ -1,0 +1,16 @@
+condition:
+  jewellery_type: Earring
+  jewellery_params:
+    type: stud
+    stone: amber
+expectation:
+  box:
+    main_section: []
+    ring_compartment: []
+    top_shelf: []
+  dresser_top:
+  - stone: amber
+    type: stud
+  safe: []
+  travel_roll: []
+  tree: []

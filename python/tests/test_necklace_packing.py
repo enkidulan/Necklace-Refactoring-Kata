@@ -4,6 +4,7 @@ from jewellery_storage.packer import pack_necklace
 def test_pack_pearl_necklace(jewellery_storage):
     item = Necklace(stone=Jewel.Pearl, type=NecklaceType.Beads)
     pack_necklace(item, jewellery_storage)
+
     # TODO: check it packed it correctly
 
 
