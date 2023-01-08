@@ -1,20 +1,9 @@
-from jewellery_storage.storage import Jewellery, JewelleryStorage, Jewel, EarringType, NecklaceType, Necklace
-
-
-def pack_necklace(item: Necklace, storage: JewelleryStorage):
-    if item.stone == Jewel.Diamond:
-        storage.safe.append(item)
-    elif not item.is_heavy():
-        storage.box.top_shelf.append(item)
-    elif item.type == NecklaceType.Pendant:
-        storage.tree.append(item.chain)
-        storage.box.top_shelf.append(item.pendant)
-    else:
-        storage.tree.append(item)
+from jewellery_storage.storage import Jewellery, JewelleryStorage, Jewel, EarringType, NecklaceType
 
 
 def pack(item: Jewellery, storage: JewelleryStorage):
-    if storage.is_in_travel_roll(item) and not item.is_heavy():
+
+    if storage.is_in_travel_roll(item) and not item.is_heavy():  # what does that mean?
         storage.box.top_shelf.append(item)
     elif item.stone == Jewel.Diamond:
         storage.safe.append(item)
@@ -36,5 +25,5 @@ def pack(item: Jewellery, storage: JewelleryStorage):
     else:
         storage.dresser_top.append(item)
 
-    if storage.is_in_travel_roll(item):
+    if storage.is_in_travel_roll(item):    # what does that mean? looks like a hack
         storage.travel_roll.remove(item)

@@ -1,15 +1,15 @@
 condition:
-  jewellery_type: Earring
+  jewellery_type: Necklace
   jewellery_params:
-    type: stud
+    type: chain
     stone: amber
 expectation:
   box:
     main_section: []
     ring_compartment: []
     top_shelf:
-    - name: earring
-      type: stud
+    - name: necklace
+      type: chain
       stone: amber
   dresser_top: []
   safe: []

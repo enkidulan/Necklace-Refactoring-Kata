@@ -1,6 +1,10 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass as base_dataclass, field
 from enum import StrEnum, auto
 
+def dataclass(cls):
+    new_cls = base_dataclass(cls)
+    new_cls.name = cls.__name__.lower()
+    return new_cls
 
 class Jewel(StrEnum):
     Plain = auto()
@@ -24,7 +28,13 @@ class NecklaceType(StrEnum):
 
 @dataclass
 class Jewellery:
+
     stone: Jewel
+    name: str = field(init=False, default=None)
+
+    # @property
+    # def jewellery(self):
+    #     return field(init=False, default_factory=lambda: self.__class__.__name__)
 
     def is_ring(self):
         return False

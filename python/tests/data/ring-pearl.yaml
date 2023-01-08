@@ -1,0 +1,15 @@
+condition:
+  jewellery_type: Ring
+  jewellery_params:
+    stone: pearl
+expectation:
+  box:
+    main_section: []
+    ring_compartment: []
+    top_shelf: []
+  dresser_top:
+  - name: ring
+    stone: pearl
+  safe: []
+  travel_roll: []
+  tree: []

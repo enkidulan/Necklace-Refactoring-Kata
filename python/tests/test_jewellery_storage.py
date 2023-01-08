@@ -5,8 +5,9 @@ import pytest
 import yaml
 from testfixtures import compare
 
+
 from jewellery_storage.packer import pack
-from jewellery_storage.storage import *
+# from jewellery_storage.storage import *
 
 from jewellery_storage import storage
 
@@ -50,9 +51,29 @@ def pytest_generate_tests(metafunc):
     )
 
 
+
+def get_annotations(cls: type):
+    all_ann = [c.__annotations__ for c in cls.mro()[:-1]]
+    all_ann_dict = dict()
+    for aa in all_ann[::-1]:
+        all_ann_dict.update(**aa)
+    return all_ann_dict
+
+
+def deserialize(value, jewellery_storage):
+
+    factory_class = getattr(storage, value["jewellery_type"])
+    kwargs = {
+        k: getattr(get_annotations(factory_class)[k], v.title()) if isinstance(v, str) else deserialize(v, jewellery_storage)
+        for k,v in value["jewellery_params"].items()
+    }
+    item = factory_class(**kwargs)
+    if value.get("in_travel_roll"):
+        jewellery_storage.travel_roll.append(item)
+    return item
+
 @pytest.mark.ddt(_HERE.glob("data/*.yaml"))
-def test_jewellery(jewellery_storage, condition, expectation):
-    factory_class = getattr(storage, condition["jewellery_type"])
-    item = factory_class(**condition["jewellery_params"])
+def test_pack(jewellery_storage, condition, expectation):
+    item = deserialize(condition, jewellery_storage)
     pack(item, jewellery_storage)
     compare(expectation, asdict(jewellery_storage))

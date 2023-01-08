@@ -1,7 +1,7 @@
 condition:
   jewellery_type: Earring
   jewellery_params:
-    type: stud
+    type: drop
     stone: amber
 expectation:
   box:
@@ -9,7 +9,7 @@ expectation:
     ring_compartment: []
     top_shelf:
     - name: earring
-      type: stud
+      type: drop
       stone: amber
   dresser_top: []
   safe: []

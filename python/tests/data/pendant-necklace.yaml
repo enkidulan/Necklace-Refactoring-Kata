@@ -1,0 +1,26 @@
+condition:
+  jewellery_type: PendantNecklace
+  jewellery_params:
+    chain:
+      jewellery_type: Necklace
+      jewellery_params:
+        type: beads
+        stone: amber
+    pendant:
+      jewellery_type: Ring
+      jewellery_params:
+        stone: pearl
+expectation:
+  box:
+    main_section: []
+    ring_compartment: []
+    top_shelf:
+    - name: ring
+      stone: pearl
+  dresser_top: []
+  safe: []
+  travel_roll: []
+  tree:
+  - name: necklace
+    stone: amber
+    type: beads

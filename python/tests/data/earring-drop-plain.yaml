@@ -1,16 +1,16 @@
 condition:
   jewellery_type: Earring
   jewellery_params:
-    type: stud
-    stone: amber
+    type: drop
+    stone: plain
 expectation:
   box:
-    main_section: []
-    ring_compartment: []
-    top_shelf:
+    main_section:
     - name: earring
-      type: stud
-      stone: amber
+      type: drop
+      stone: plain
+    ring_compartment: []
+    top_shelf: []
   dresser_top: []
   safe: []
   travel_roll: []

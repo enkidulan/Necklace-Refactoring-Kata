@@ -1,17 +1,17 @@
 condition:
   jewellery_type: Earring
   jewellery_params:
-    type: stud
+    type: hoop
     stone: amber
 expectation:
   box:
     main_section: []
     ring_compartment: []
-    top_shelf:
-    - name: earring
-      type: stud
-      stone: amber
+    top_shelf: []
   dresser_top: []
   safe: []
   travel_roll: []
-  tree: []
+  tree:
+  - name: earring
+    type: hoop
+    stone: amber
