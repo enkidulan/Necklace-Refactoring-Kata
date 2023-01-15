@@ -16,16 +16,26 @@ from jewellery_storage.storage import (
 from .interfaces import IJewelleryStorage, ITravelRoll
 
 
-def travel_roll_handler(item):
-    storage = component.getUtility(IJewelleryStorage)
-    if not item.is_heavy():
-        storage.box.top_shelf.append(item)
-    else:
-        storage.dresser_top.append(item)
+def inject(service, by_name):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            provider = component.getUtility(service)
+            kwargs[by_name] = provider
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+# def travel_roll_handler(item):
+#     storage = component.getUtility(IJewelleryStorage)
+#     if not item.is_heavy():
+#         storage.box.top_shelf.append(item)
+#     else:
+#         storage.dresser_top.append(item)
 
 
-def diamond_handler(item):
-    pass
+@inject(IJewelleryStorage, by_name="storage")
+def diamond_handler(item, storage):
+    storage.safe.append(item)
 
 
 @component.adapter(PendantNecklace)
@@ -35,46 +45,42 @@ def pendant_necklace_handler(item):
 
 
 @component.adapter(Necklace)
-def necklace_handler(item):
-    storage = component.getUtility(IJewelleryStorage)
-    if item.stone == Jewel.Diamond:
-        storage.safe.append(item)
-    elif not(item.type is NecklaceType.Beads or item.type is NecklaceType.LongChain):
-        storage.box.top_shelf.append(item)
-    else:
+@inject(IJewelleryStorage, by_name="storage")
+def necklace_handler(item, storage):
+    if item.type is NecklaceType.Beads or item.type is NecklaceType.LongChain:
         storage.tree.append(item)
+    else:
+        storage.box.top_shelf.append(item)
 
 
 @component.adapter(Earring)
-def earring_handler(item):
-    storage = component.getUtility(IJewelleryStorage)
-    if item.stone == Jewel.Diamond:
-        storage.safe.append(item)
-    elif item.type == EarringType.Hoop:
+@inject(IJewelleryStorage, by_name="storage")
+def earring_handler(item, storage):
+    if item.type == EarringType.Hoop:
         storage.tree.append(item)
-    elif item.type == EarringType.Drop and item.stone is not Jewel.Plain:
-        storage.box.top_shelf.append(item)
     elif item.type == EarringType.Drop:
-        storage.box.main_section.append(item)
+        if item.stone is not Jewel.Plain:
+            storage.box.top_shelf.append(item)
+        else:
+            storage.box.main_section.append(item)
     else:
         storage.box.top_shelf.append(item)
 
 
 @component.adapter(Ring)
-def ring_handler(item):
-    storage = component.getUtility(IJewelleryStorage)
-    if item.stone == Jewel.Diamond:
-        storage.safe.append(item)
-    else:
-        storage.dresser_top.append(item)
+@inject(IJewelleryStorage, by_name="storage")
+def ring_handler(item, storage):
+    storage.dresser_top.append(item)
 
 
 def pack(item: Jewellery):
-    # storage = component.getUtility(ITravelRoll)
     # if storage.is_in_travel_roll(item):  # XXX:
     #     travel_roll_handler(item)
     # else:
-    component.handle(item)
+    if item.stone == Jewel.Diamond:
+        diamond_handler(item)
+    else:
+        component.handle(item)
 
 
 def bootstrap():
