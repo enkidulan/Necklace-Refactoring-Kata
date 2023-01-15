@@ -28,80 +28,38 @@ class NecklaceType(StrEnum):
 
 @dataclass
 class Jewellery:
-
     stone: Jewel
     name: str = field(init=False, default=None)
-
-    # @property
-    # def jewellery(self):
-    #     return field(init=False, default_factory=lambda: self.__class__.__name__)
-
-    def is_ring(self):
-        return False
-
-    def is_small(self):
-        return False
-
-    def is_earring(self):
-        return False
-
-    def is_necklace(self):
-        return False
-
-    def is_heavy(self):
-        return False
 
 
 @dataclass
 class Ring(Jewellery):
-    def is_ring(self):
-        return True
+    pass
 
 
 @dataclass
 class Earring(Jewellery):
     type: EarringType
 
-    def is_small(self):
-        return self.type is EarringType.Stud
-
-    def is_earring(self):
-        return True
-
-
 @dataclass
 class Necklace(Jewellery):
     type: NecklaceType
-
-    def is_necklace(self):
-        return True
-
-    def is_heavy(self):
-        return self.type is NecklaceType.Beads or self.type is NecklaceType.LongChain
 
 
 @dataclass
 class PendantNecklace(Jewellery):
     chain: Necklace
     pendant: Jewellery
+    type = NecklaceType.Pendant
 
     def __init__(self, chain: Necklace, pendant: Jewellery):
-        Jewellery.__init__(self, pendant.stone)
+        Jewellery.__init__(self, pendant.stone) # XXX
         self.chain = chain
         self.pendant = pendant
-        self.type = NecklaceType.Pendant
-
-    def is_heavy(self):
-        return self.chain.is_heavy() or self.pendant.is_heavy()
-
-    def is_necklace(self):
-        return True
-
 
 @dataclass
 class Pendant(Jewellery):
-    def is_small(self):
-        return True
+    pass
 
 
 @dataclass
@@ -114,10 +72,11 @@ class JewelleryBox:
 @dataclass
 class JewelleryStorage:
     tree: list = field(default_factory=list)
-    travel_roll: list = field(default_factory=list)
     safe: list = field(default_factory=list)
     dresser_top: list = field(default_factory=list)
     box: JewelleryBox = field(default_factory=JewelleryBox)
 
-    def is_in_travel_roll(self, item):
-        return item in self.travel_roll
+
+@dataclass
+class TravelRoll:
+    items: list = field(default_factory=list)

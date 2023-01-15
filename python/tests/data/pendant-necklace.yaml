@@ -14,12 +14,11 @@ expectation:
   box:
     main_section: []
     ring_compartment: []
-    top_shelf:
-    - name: ring
-      stone: pearl
-  dresser_top: []
+    top_shelf: []
+  dresser_top:
+  - name: ring
+    stone: pearl
   safe: []
-  travel_roll: []
   tree:
   - name: necklace
     stone: amber
